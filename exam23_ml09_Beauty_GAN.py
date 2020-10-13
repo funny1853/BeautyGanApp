@@ -19,13 +19,13 @@ tf.disable_v2_behavior()
 
 
 detector = dlib.get_frontal_face_detector()
-sp = dlib.shape_predictor('./models/shape_predictor_5_face_landmarks.dat') #모양을 예측해주는 모델
+sp = dlib.shape_predictor('../models/shape_predictor_5_face_landmarks.dat') #모양을 예측해주는 모델
 
 
 
 
 
-img = dlib.load_rgb_image('./imgs/12.jpg')
+img = dlib.load_rgb_image('../imgs/12.jpg')
 plt.figure(figsize=(16,10))
 plt.imshow(img)
 plt.show()
@@ -89,7 +89,7 @@ def align_faces(img):
     faces = dlib.get_face_chips(img, objs, size=256, padding = 0.35) #이미지에서 얼굴 잘라서 보여주는 코드
     return faces
 
-test_img = dlib.load_rgb_image('./imgs/12.jpg')
+test_img = dlib.load_rgb_image('../imgs/12.jpg')
 test_faces = align_faces(test_img)
 fig, axes = plt.subplots(1, len(test_faces)+1, figsize=(20,16))
 axes[0].imshow(test_img)
@@ -105,8 +105,8 @@ for i, face in enumerate(test_faces):
 sess = tf.Session()
 sess.run(tf.global_variables_initializer()) #모델 초기화 해주는 코드
 
-saver = tf.train.import_meta_graph('./models/model.meta')
-saver.restore(sess, tf.train.latest_checkpoint('./models'))
+saver = tf.train.import_meta_graph('../models/model.meta')
+saver.restore(sess, tf.train.latest_checkpoint('../models'))
 
 graph = tf.get_default_graph()
 X = graph.get_tensor_by_name('X:0')
@@ -126,11 +126,11 @@ def deprocess(img):
 
 
 #화장 안한 이미지 (source image)
-img1 = dlib.load_rgb_image('./imgs/no_makeup/xfsy_0405.png')
+img1 = dlib.load_rgb_image('../imgs/no_makeup/xfsy_0405.png')
 img1_faces = align_faces(img1)
 
 #화장한 이미지 (reference image)
-img2 = dlib.load_rgb_image('./imgs/makeup/002.jpg')
+img2 = dlib.load_rgb_image('../imgs/makeup/002.jpg')
 img2_faces = align_faces(img2)
 
 fig, axes = plt.subplots(1,2,figsize=(16,10))
